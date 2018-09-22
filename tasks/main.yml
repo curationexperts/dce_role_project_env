@@ -1,5 +1,5 @@
 ---
- tasks file for dce_role_project_env
+# tasks file for dce_role_project_env
 - name: Determine if the project-specific vars file exists
   local_action:
     module: stat
@@ -8,7 +8,7 @@
   register: project_vars_file
 
 - name: Set-up project-specific environment variables
-  include_vars: "{{ item }}"
-  loop: "{{ project_env_path }}"
-  when: project_vars_file.stat.exists
+  include_vars: "{{ item.stat.path }}"
+  when: item.stat.exists
+  loop: "{{ project_env_file.results }}"
 #  no_log: True
